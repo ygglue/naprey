@@ -2,30 +2,25 @@
 import { advocacy } from '../data/content';
 ---
 
-<section id="advocacy" class="section section--alt" aria-labelledby="advocacy-heading">
+<section id="advocacy" class="section" aria-labelledby="advocacy-heading">
   <div class="container">
-    <header>
-      <span class="section-label">Purpose</span>
-      <h2 id="advocacy-heading">Advocacy &amp; Causes</h2>
-      <p class="advocacy-intro">
-        Disability is not inability. Through advocacy, community building, and direct action, Naprey champions
+    <header class="adv-head" data-reveal>
+      <span class="kicker">Purpose</span>
+      <h2 id="advocacy-heading">Advocacy &amp; causes</h2>
+      <p class="adv-intro">
+        Disability is not inability. Through community building and direct action, Naprey champions
         the rights and visibility of Persons with Disability across the Philippines and beyond.
       </p>
     </header>
 
-    <ul class="advocacy-list" role="list">
+    <ul class="adv-list" role="list">
       {advocacy.map((item) => (
-        <li class="advocacy-item">
-          <div class="advocacy-accent" aria-hidden="true"></div>
-          <div class="advocacy-content">
-            <div class="advocacy-meta">
-              <h3>{item.name}</h3>
-              <p class="advocacy-role">
-                {item.role}{item.since ? ` · Since ${item.since}` : ''}
-              </p>
-            </div>
-            <p class="advocacy-desc">{item.description}</p>
-          </div>
+        <li class="adv-item" data-reveal>
+          <h3>{item.name}</h3>
+          <p class="adv-role">
+            {item.role}{item.since ? ` · Since ${item.since}` : ''}
+          </p>
+          <p class="adv-desc">{item.description}</p>
         </li>
       ))}
     </ul>
@@ -33,64 +28,40 @@ import { advocacy } from '../data/content';
 </section>
 
 <style>
-  .advocacy-intro {
+  .adv-head { margin-bottom: var(--space-xl); max-width: 60ch; }
+  .adv-head h2 {
+    font-size: var(--text-2xl);
+    margin-block: var(--space-xs) var(--space-md);
+  }
+  .adv-intro {
     font-size: var(--text-lg);
-    color: var(--clr-text-muted);
-    margin-bottom: var(--space-lg);
-    max-width: 60ch;
+    color: var(--ink-soft);
+    line-height: 1.5;
   }
 
-  .advocacy-list {
+  .adv-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
-    gap: var(--space-md);
+    grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+    gap: var(--space-lg) var(--space-xl);
     list-style: none;
-    padding: 0;
     margin: 0;
+    padding: 0;
   }
 
-  .advocacy-item {
-    display: flex;
-    gap: var(--space-sm);
-    padding: var(--space-md);
-    background: var(--clr-bg);
-    border-radius: 8px;
-    border: 1px solid var(--clr-border);
+  .adv-item {
+    padding-top: var(--space-md);
+    border-top: 2px solid var(--ink);
   }
-
-  @media (max-width: 640px) {
-    .advocacy-item { padding: var(--space-sm); }
-    .advocacy-intro { max-width: none; }
+  .adv-item h3 {
+    font-size: var(--text-lg);
+    margin-bottom: 0.2rem;
   }
-
-  .advocacy-accent {
-    flex-shrink: 0;
-    width: 4px;
-    border-radius: 4px;
-    background: var(--clr-accent);
-  }
-
-  .advocacy-content {
-    flex: 1;
-  }
-
-  .advocacy-meta {
-    margin-bottom: var(--space-xs);
-  }
-
-  h3 {
-    margin-bottom: 0.15rem;
-  }
-
-  .advocacy-role {
+  .adv-role {
     font-size: var(--text-sm);
     font-weight: 600;
-    color: var(--clr-accent);
+    color: var(--accent-deep);
+    margin-bottom: 0.6rem;
     max-width: none;
   }
-
-  .advocacy-desc {
-    color: var(--clr-text-muted);
-    font-size: var(--text-base);
-  }
+  .adv-desc { color: var(--ink-soft); }
 </style>

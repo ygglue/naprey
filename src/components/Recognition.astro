@@ -4,17 +4,15 @@ import { recognition } from '../data/content';
 
 <section id="recognition" class="section section--alt" aria-labelledby="recognition-heading">
   <div class="container">
-    <header>
-      <span class="section-label">Achievements</span>
-      <h2 id="recognition-heading">Recognition &amp; Notable Milestones</h2>
+    <header class="rec-head" data-reveal>
+      <span class="kicker">Recognition</span>
+      <h2 id="recognition-heading">Notable milestones</h2>
     </header>
 
     <ul class="rec-grid" role="list">
       {recognition.map((item) => (
-        <li class="rec-card">
-          {item.year && (
-            <span class="rec-year" aria-label={`Year: ${item.year}`}>{item.year}</span>
-          )}
+        <li class="rec-card" data-reveal>
+          {item.year && <span class="rec-year">{item.year}</span>}
           <h3>{item.title}</h3>
           <p>{item.body}</p>
         </li>
@@ -24,43 +22,42 @@ import { recognition } from '../data/content';
 </section>
 
 <style>
+  .rec-head { margin-bottom: var(--space-xl); }
+  .rec-head h2 {
+    font-size: var(--text-2xl);
+    margin-top: var(--space-xs);
+  }
+
   .rec-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(290px, 100%), 1fr));
     gap: var(--space-md);
     list-style: none;
-    padding: 0;
     margin: 0;
+    padding: 0;
   }
 
+  /* Single hairline border on a lighter fill — subtle lift, no ghost-card */
   .rec-card {
     padding: var(--space-md);
-    background: var(--clr-bg);
-    border: 1px solid var(--clr-border);
-    border-top: 4px solid var(--clr-accent);
-    border-radius: 0 0 8px 8px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
   }
-
-  @media (max-width: 640px) {
-    .rec-card { padding: var(--space-sm); }
-  }
-
   .rec-year {
     display: inline-block;
     font-size: var(--text-sm);
     font-weight: 600;
-    color: var(--clr-accent);
-    margin-bottom: 0.4rem;
-  }
-
-  h3 {
-    font-size: var(--text-lg);
+    color: var(--accent-deep);
     margin-bottom: 0.5rem;
   }
-
-  p {
+  .rec-card h3 {
+    font-size: var(--text-md);
+    margin-bottom: 0.4rem;
+  }
+  .rec-card p {
     font-size: var(--text-sm);
-    color: var(--clr-text-muted);
-    line-height: 1.65;
+    color: var(--ink-soft);
+    line-height: 1.6;
   }
 </style>

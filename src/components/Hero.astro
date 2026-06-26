@@ -4,138 +4,100 @@ import { hero } from '../data/content';
 
 <section class="hero" aria-labelledby="hero-name">
   <div class="hero-inner container">
-    <div class="hero-text">
-      <p class="hero-label">Disability Champion · Entrepreneur</p>
-      <h1 id="hero-name">{hero.name}</h1>
-      <blockquote class="hero-quote">
-        <p>"{hero.tagline}"</p>
-      </blockquote>
-      <p class="hero-intro">{hero.intro}</p>
-      <div class="hero-ctas">
-        <a href={hero.cta.href} class="btn btn-primary">{hero.cta.label}</a>
-        <a href={hero.secondaryCta.href} class="btn btn-outline">{hero.secondaryCta.label}</a>
-      </div>
-    </div>
+    <p class="hero-eyebrow" data-reveal>
+      <span>{hero.title}</span>
+      <span class="hero-dot" aria-hidden="true">·</span>
+      <span>{hero.location}</span>
+    </p>
 
-    <!--
-      Photo placeholder — replace with:
-      <Image src={import('../assets/headshot.jpg')} alt="Naprey Almario smiling" />
-      once the client provides a photo.
-    -->
-    <div
-      class="hero-photo-placeholder"
-      role="img"
-      aria-label="Photo of Naprey Almario — placeholder, to be replaced with client photo"
-    >
-      <svg class="placeholder-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
-        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
-      <p class="placeholder-label">Client photo coming soon</p>
+    <h1 id="hero-name" class="hero-name" data-reveal>
+      Naprey<span class="hero-name-2">Almario</span>
+    </h1>
+
+    <p class="hero-tagline" data-reveal>{hero.tagline}</p>
+
+    <p class="hero-intro" data-reveal>{hero.intro}</p>
+
+    <div class="hero-ctas" data-reveal>
+      <a href={hero.cta.href} class="btn btn-primary">{hero.cta.label}</a>
+      <a href={hero.secondaryCta.href} class="btn btn-outline">{hero.secondaryCta.label}</a>
     </div>
   </div>
 </section>
 
 <style>
   .hero {
-    background: linear-gradient(135deg, var(--clr-bg) 0%, var(--clr-bg-alt) 100%);
-    padding-block: clamp(4rem, 10vw, 7rem);
+    padding-block: clamp(3.5rem, 2rem + 9vw, 8rem);
     scroll-margin-top: var(--nav-h);
+    overflow: hidden;
   }
 
-  .hero-inner {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: var(--space-lg);
+  .hero-eyebrow {
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
-  }
-
-  @media (max-width: 700px) {
-    .hero-inner {
-      grid-template-columns: 1fr;
-    }
-    .hero-photo-placeholder {
-      width: 100%;
-      max-width: 320px;
-      margin-inline: auto;
-    }
-  }
-
-  .hero-label {
+    gap: 0.5rem;
     font-size: var(--text-sm);
     font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--clr-accent);
-    margin-bottom: 0.75rem;
+    letter-spacing: 0.01em;
+    color: var(--ink-soft);
     max-width: none;
+    margin-bottom: var(--space-md);
+  }
+  .hero-dot { color: var(--accent); }
+
+  .hero-name {
+    font-size: clamp(2.8rem, 1rem + 11vw, 6.2rem);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-lg);
+  }
+  .hero-name-2 {
+    display: block;
+    color: var(--accent);
   }
 
-  h1 {
-    margin-bottom: var(--space-sm);
-    color: var(--clr-text);
-  }
-
-  .hero-quote {
-    border-left: 4px solid var(--clr-accent);
-    padding-left: 1.25rem;
-    margin-block: var(--space-sm);
-  }
-  .hero-quote p {
+  .hero-tagline {
+    position: relative;
     font-family: var(--font-display);
     font-style: italic;
-    font-size: clamp(1.1rem, 4vw, 1.5rem);
-    color: var(--clr-accent);
-    line-height: 1.4;
-    max-width: 50ch;
+    font-size: var(--text-2xl);
+    line-height: 1.18;
+    color: var(--ink);
+    max-width: 24ch;
+    margin-bottom: var(--space-lg);
+    padding-left: clamp(2rem, 1rem + 3vw, 3.5rem);
   }
-
-  @media (max-width: 700px) {
-    .hero-quote p {
-      max-width: none;
-    }
+  /* Oversized hanging quotation mark — replaces the old left-stripe border */
+  .hero-tagline::before {
+    content: '\201C';
+    position: absolute;
+    left: -0.1rem;
+    top: -0.35em;
+    font-family: var(--font-display);
+    font-style: normal;
+    font-size: clamp(4rem, 2rem + 8vw, 7rem);
+    line-height: 1;
+    color: var(--accent);
+    opacity: 0.28;
   }
 
   .hero-intro {
-    color: var(--clr-text-muted);
     font-size: var(--text-lg);
-    margin-bottom: var(--space-md);
-    max-width: 54ch;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 52ch;
+    margin-bottom: var(--space-xl);
   }
 
   .hero-ctas {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-sm);
-    align-items: center;
   }
 
-  /* Photo placeholder */
-  .hero-photo-placeholder {
-    width: clamp(200px, 30vw, 320px);
-    aspect-ratio: 3 / 4;
-    border-radius: 8px;
-    border: 2px dashed var(--clr-border);
-    background: var(--clr-bg-accent);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    color: var(--clr-text-muted);
-    flex-shrink: 0;
-  }
-
-  .placeholder-icon {
-    width: 3rem;
-    height: 3rem;
-    color: var(--clr-border);
-  }
-
-  .placeholder-label {
-    font-size: var(--text-sm);
-    color: var(--clr-text-muted);
-    text-align: center;
-    max-width: 12ch;
+  @media (max-width: 520px) {
+    .hero-ctas { flex-direction: column; align-items: stretch; }
+    .hero-ctas .btn { width: 100%; }
   }
 </style>

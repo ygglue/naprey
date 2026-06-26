@@ -1,72 +1,79 @@
 ---
 import { story } from '../data/content';
+
+// Split the narrative so the pull-quote lands mid-story for editorial rhythm.
+const [first, second, ...rest] = story.paragraphs;
 ---
 
-<section id="story" class="section section--alt" aria-labelledby="story-heading">
-  <div class="container story-grid">
-    <header class="story-header">
-      <span class="section-label">About</span>
-      <h2 id="story-heading">{story.heading}</h2>
+<section id="story" class="section" aria-labelledby="story-heading">
+  <div class="container container--narrow">
+    <header class="story-head" data-reveal>
+      <span class="index">01</span>
+      <span class="kicker">My story</span>
     </header>
 
-    <div class="story-body">
-      {story.paragraphs.map((para) => <p>{para}</p>)}
+    <h2 id="story-heading" class="story-title" data-reveal>{story.heading}</h2>
 
-      <blockquote class="pull-quote" aria-label="Key quote from Naprey">
-        <p>"{story.pullQuote}"</p>
+    <div class="story-body">
+      <p class="story-lead" data-reveal>{first}</p>
+      <p data-reveal>{second}</p>
+
+      <blockquote class="pull" data-reveal>
+        <p>{story.pullQuote}</p>
       </blockquote>
+
+      {rest.map((para) => <p data-reveal>{para}</p>)}
     </div>
   </div>
 </section>
 
 <style>
-  .story-grid {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: var(--space-lg);
-    align-items: start;
+  .story-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.85rem;
+    margin-bottom: var(--space-sm);
   }
-
-  .story-header {
-    position: sticky;
-    top: calc(var(--nav-h) + 2rem);
-  }
-
-  @media (max-width: 700px) {
-    .story-grid { grid-template-columns: 1fr; }
-    .story-header { position: static; }
-    .pull-quote {
-      padding: var(--space-sm) var(--space-sm) var(--space-sm) var(--space-md);
-    }
-  }
-
-  .story-header h2 {
-    margin-bottom: 0;
+  .story-title {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-lg);
   }
 
   .story-body p {
-    color: var(--clr-text-muted);
-    font-size: var(--text-base);
+    color: var(--ink-soft);
   }
-  .story-body p:first-child {
+  .story-lead {
     font-size: var(--text-lg);
-    color: var(--clr-text);
+    line-height: 1.55;
+    color: var(--ink);
   }
 
-  .pull-quote {
-    margin-top: var(--space-md);
-    padding: var(--space-md) var(--space-md) var(--space-md) var(--space-lg);
-    border-left: 5px solid var(--clr-accent);
-    background: var(--clr-bg-accent);
-    border-radius: 0 8px 8px 0;
+  /* Pull-quote — top/bottom rules + hanging quote, no left-stripe */
+  .pull {
+    margin-block: var(--space-xl);
+    padding-block: var(--space-lg);
+    border-block: 1px solid var(--line);
+    max-width: none;
   }
-
-  .pull-quote p {
+  .pull p {
+    position: relative;
     font-family: var(--font-display);
     font-style: italic;
-    font-size: clamp(1.1rem, 4vw, 1.5rem);
-    line-height: 1.5;
-    color: var(--clr-accent);
-    max-width: 55ch;
+    font-size: var(--text-xl);
+    line-height: 1.32;
+    color: var(--ink);
+    max-width: 30ch;
+    padding-left: clamp(2rem, 1rem + 3vw, 3.25rem);
+  }
+  .pull p::before {
+    content: '\201C';
+    position: absolute;
+    left: -0.15rem;
+    top: -0.35em;
+    font-style: normal;
+    font-size: clamp(3.5rem, 2rem + 6vw, 5.5rem);
+    line-height: 1;
+    color: var(--accent);
+    opacity: 0.3;
   }
 </style>

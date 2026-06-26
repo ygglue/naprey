@@ -4,17 +4,15 @@ import { timeline } from '../data/content';
 
 <section id="timeline" class="section" aria-labelledby="timeline-heading">
   <div class="container">
-    <header>
-      <span class="section-label">Career</span>
-      <h2 id="timeline-heading">Timeline</h2>
+    <header class="tl-head" data-reveal>
+      <span class="kicker">Career</span>
+      <h2 id="timeline-heading">The path here</h2>
     </header>
 
     <ol class="timeline" aria-label="Career timeline">
       {timeline.map((entry, i) => (
-        <li class="tl-item">
-          <div class="tl-period" aria-label={`Period: ${entry.period}`}>
-            {entry.period}
-          </div>
+        <li class="tl-item" data-reveal>
+          <div class="tl-period">{entry.period}</div>
           <div class="tl-connector" aria-hidden="true">
             <span class="tl-dot"></span>
             {i < timeline.length - 1 && <span class="tl-line"></span>}
@@ -31,67 +29,33 @@ import { timeline } from '../data/content';
 </section>
 
 <style>
+  .tl-head { margin-bottom: var(--space-xl); }
+  .tl-head h2 {
+    font-size: var(--text-2xl);
+    margin-top: var(--space-xs);
+  }
+
   .timeline {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 0;
   }
 
   .tl-item {
     display: grid;
-    grid-template-columns: 10rem 2rem 1fr;
+    grid-template-columns: 11rem 2rem 1fr;
     gap: 0 1.25rem;
-    /* stretch makes the connector column as tall as the content column
-       so the flex-1 line inside fills the full gap between dots */
     align-items: stretch;
-  }
-
-  @media (max-width: 600px) {
-    /* Switch to a border-left approach on mobile — simpler and reliable */
-    .timeline {
-      padding-left: 1.5rem;
-      border-left: 2px solid var(--clr-border);
-    }
-
-    .tl-item {
-      grid-template-columns: 1fr;
-      position: relative;
-    }
-
-    /* Dot drawn via ::before on each item, aligned to the border-left */
-    .tl-item::before {
-      content: '';
-      position: absolute;
-      left: calc(-1.5rem - 5px);
-      top: 0.45rem;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--clr-accent);
-      border: 2px solid var(--clr-bg);
-      box-shadow: 0 0 0 2px var(--clr-accent);
-    }
-
-    /* Hide the dedicated connector column — the border-left handles the line */
-    .tl-connector { display: none; }
-
-    .tl-period {
-      text-align: left;
-      white-space: normal;
-      padding-top: 0;
-      margin-bottom: 0.15rem;
-    }
   }
 
   .tl-period {
     text-align: right;
-    padding-top: 0.35rem;
-    font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--clr-accent);
+    padding-top: 0.15rem;
+    font-family: var(--font-display);
+    font-size: var(--text-md);
+    color: var(--accent-deep);
     white-space: nowrap;
   }
 
@@ -99,45 +63,72 @@ import { timeline } from '../data/content';
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 0.5rem;
+    padding-top: 0.45rem;
   }
-
   .tl-dot {
     display: block;
-    width: 12px;
-    height: 12px;
+    width: 13px;
+    height: 13px;
     border-radius: 50%;
-    background: var(--clr-accent);
-    border: 3px solid var(--clr-bg);
-    box-shadow: 0 0 0 2px var(--clr-accent);
+    background: var(--accent);
+    border: 3px solid var(--paper);
+    box-shadow: 0 0 0 2px var(--accent);
     flex-shrink: 0;
   }
-
   .tl-line {
     display: block;
     flex: 1;
     width: 2px;
-    background: var(--clr-border);
+    background: var(--line);
     margin-top: 4px;
     min-height: 2.5rem;
   }
 
-  .tl-content {
-    padding-bottom: var(--space-md);
+  .tl-content { padding-bottom: var(--space-lg); }
+  .tl-content h3 {
+    font-size: var(--text-md);
+    margin-bottom: 0.15rem;
   }
-
-  h3 { margin-bottom: 0.2rem; }
-
   .tl-org {
     font-size: var(--text-sm);
     font-weight: 600;
-    color: var(--clr-accent);
+    color: var(--accent-deep);
     margin-bottom: 0.4rem;
     max-width: none;
   }
-
   .tl-desc {
     font-size: var(--text-sm);
-    color: var(--clr-text-muted);
+    color: var(--ink-soft);
+  }
+
+  /* Mobile: a single spine on the left with dots; period above each entry */
+  @media (max-width: 640px) {
+    .timeline {
+      padding-left: 1.5rem;
+      border-left: 2px solid var(--line);
+    }
+    .tl-item {
+      grid-template-columns: 1fr;
+      position: relative;
+    }
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: calc(-1.5rem - 6px);
+      top: 0.35rem;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--paper);
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+    .tl-connector { display: none; }
+    .tl-period {
+      text-align: left;
+      white-space: normal;
+      padding-top: 0;
+      margin-bottom: 0.15rem;
+    }
   }
 </style>

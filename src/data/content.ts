@@ -22,11 +22,42 @@ export const nav = {
 export const hero = {
   name: "Naprey Almario",
   title: "Disability Champion · Entrepreneur",
+  location: "Davao City, Philippines",
   tagline: "Not limited but limitless. Not stuck but soaring.",
   intro:
-    "Polio survivor. Wheelchair user. Advocate, educator, and entrepreneur from Davao City, Philippines — proving every day that disability is not inability.",
+    "Polio survivor. Wheelchair user. Advocate, educator, and entrepreneur — proving every day that disability is not inability, and helping others travel, study, speak, and lead.",
+  cta: { label: "Work with me", href: "#contact" },
+  secondaryCta: { label: "Read my story", href: "#story" },
+};
+
+// Credibility strip shown directly under the hero — quick trust signals.
+// All drawn from verified achievements in `recognition` / `work` below.
+export const proof = {
+  lead: "Recognized nationally & internationally",
+  items: [
+    "Australia Awards Scholar — Curtin University",
+    "RDC XI Representative — PWD & Senior Citizen sector",
+    "Pinoy Big Brother Season 4 Housemate",
+    "Air Asia Philippines Brand Ambassador",
+    "Top 1 Cebuana Lhuillier — Davao Region",
+  ],
+};
+
+// Client-facing framing for the Work/Services section.
+export const services = {
+  kicker: "Work with me",
+  heading: "How we can work together",
+  intro:
+    "Accessible travel, studying and working abroad, speaking and training, and inclusive business — practical ways I help people and organizations move forward.",
+  cta: { label: "Start a conversation", href: "#contact" },
+};
+
+// Mid-page conversion banner (drenched ink section).
+export const ctaBanner = {
+  heading: "Let's build something inclusive together.",
+  body:
+    "Travel, education abroad, a speaking engagement, or an advocacy partnership — tell me what you have in mind.",
   cta: { label: "Get in touch", href: "#contact" },
-  secondaryCta: { label: "My story", href: "#story" },
 };
 
 export const story = {

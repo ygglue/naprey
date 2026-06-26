@@ -3,19 +3,18 @@ import { contact } from '../data/content';
 import { ghl, ghlReady } from '../data/ghl';
 ---
 
-<section id="contact" class="section section--alt" aria-labelledby="contact-heading">
+<section id="contact" class="section" aria-labelledby="contact-heading">
   <div class="container">
-    <header>
-      <span class="section-label">Connect</span>
+    <header class="contact-head" data-reveal>
+      <span class="kicker">Connect</span>
       <h2 id="contact-heading">{contact.heading}</h2>
       <p class="contact-intro">{contact.intro}</p>
     </header>
 
     <div class="contact-grid">
-
       <!-- GHL contact form or fallback -->
-      <div class="contact-form-col">
-        <h3>Send a Message</h3>
+      <div class="contact-col" data-reveal>
+        <h3>Send a message</h3>
         {ghlReady.form ? (
           <iframe
             src={ghl.formUrl}
@@ -35,9 +34,7 @@ import { ghl, ghlReady } from '../data/ghl';
               {contact.emails.map((e) => (
                 <li>
                   <span class="contact-email-label">{e.label}</span>
-                  <a href={`mailto:${e.address}`} class="contact-email-link">
-                    {e.address}
-                  </a>
+                  <a href={`mailto:${e.address}`} class="contact-email-link">{e.address}</a>
                 </li>
               ))}
             </ul>
@@ -46,8 +43,8 @@ import { ghl, ghlReady } from '../data/ghl';
       </div>
 
       <!-- GHL calendar or fallback -->
-      <div class="contact-calendar-col">
-        <h3>Book a Consultation</h3>
+      <div class="contact-col" data-reveal>
+        <h3>Book a consultation</h3>
         {ghlReady.calendar ? (
           <iframe
             src={ghl.calendarUrl}
@@ -66,39 +63,33 @@ import { ghl, ghlReady } from '../data/ghl';
           </div>
         )}
       </div>
-
     </div>
 
     <!-- Always-visible contact details -->
-    <div class="contact-details" aria-label="Contact details">
+    <div class="contact-details" aria-label="Contact details" data-reveal>
       <dl class="contact-dl">
         <div class="contact-dl-item">
           <dt>Phone</dt>
-          <dd>
-            <a href={`tel:${contact.phone.tel}`}>{contact.phone.display}</a>
-          </dd>
+          <dd><a href={`tel:${contact.phone.tel}`}>{contact.phone.display}</a></dd>
         </div>
-
         <div class="contact-dl-item">
           <dt>Email</dt>
           <dd>
-            <ul class="contact-email-inline" role="list">
+            <ul class="contact-inline" role="list">
               {contact.emails.map((e) => (
                 <li><a href={`mailto:${e.address}`}>{e.address}</a></li>
               ))}
             </ul>
           </dd>
         </div>
-
         <div class="contact-dl-item">
           <dt>Location</dt>
           <dd>{contact.location}</dd>
         </div>
-
         <div class="contact-dl-item">
           <dt>Social</dt>
           <dd>
-            <ul class="social-list" role="list">
+            <ul class="contact-inline" role="list">
               {contact.social.map((s) => (
                 <li>
                   <a
@@ -106,9 +97,7 @@ import { ghl, ghlReady } from '../data/ghl';
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`${s.platform}: ${s.label} (opens in new tab)`}
-                  >
-                    {s.platform} — {s.label}
-                  </a>
+                  >{s.platform} — {s.label}</a>
                 </li>
               ))}
             </ul>
@@ -116,110 +105,98 @@ import { ghl, ghlReady } from '../data/ghl';
         </div>
       </dl>
     </div>
-
   </div>
 </section>
 
 <style>
+  .contact-head { margin-bottom: var(--space-xl); max-width: 60ch; }
+  .contact-head h2 {
+    font-size: var(--text-2xl);
+    margin-block: var(--space-xs) var(--space-md);
+  }
   .contact-intro {
     font-size: var(--text-lg);
-    color: var(--clr-text-muted);
-    margin-bottom: var(--space-lg);
-    max-width: 60ch;
+    color: var(--ink-soft);
+    line-height: 1.5;
   }
 
   .contact-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--space-md);
-    margin-bottom: var(--space-lg);
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+  }
+  .contact-col h3 {
+    font-size: var(--text-md);
+    margin-bottom: var(--space-sm);
   }
 
   @media (max-width: 700px) {
     .contact-grid { grid-template-columns: 1fr; }
   }
 
-  h3 {
-    margin-bottom: var(--space-sm);
-  }
-
   /* GHL iframes */
   .ghl-frame {
     width: 100%;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     display: block;
   }
   .ghl-form-frame { min-height: 520px; }
   .ghl-calendar-frame { min-height: 700px; }
-
   @media (max-width: 640px) {
     .ghl-form-frame { min-height: 400px; }
     .ghl-calendar-frame { min-height: 500px; }
   }
 
-  /* Placeholder shown when GHL IDs aren't set yet */
   .ghl-placeholder {
     padding: var(--space-md);
-    background: var(--clr-bg);
-    border: 2px dashed var(--clr-border);
-    border-radius: 8px;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: 12px;
     min-height: 200px;
   }
-
   .ghl-placeholder-msg {
-    color: var(--clr-text-muted);
+    color: var(--ink-soft);
     margin-bottom: var(--space-sm);
   }
-
   .contact-email-list {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.6rem;
   }
-
   .contact-email-label {
     display: block;
     font-size: var(--text-sm);
     font-weight: 600;
-    color: var(--clr-text-muted);
+    color: var(--ink-soft);
   }
 
-  .contact-email-link {
-    font-size: var(--text-base);
-  }
-
-  /* Always-visible contact details */
   .contact-details {
-    padding-top: var(--space-md);
-    border-top: 1px solid var(--clr-border);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--line);
   }
-
   .contact-dl {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
     gap: var(--space-md);
   }
-
   .contact-dl-item dt {
-    font-size: var(--text-sm);
-    font-weight: 600;
+    font-size: var(--text-xs);
+    font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--clr-text-muted);
-    margin-bottom: 0.35rem;
+    color: var(--ink-soft);
+    margin-bottom: 0.4rem;
   }
-
   .contact-dl-item dd {
-    color: var(--clr-text);
+    color: var(--ink);
     font-size: var(--text-base);
   }
-
-  .contact-email-inline,
-  .social-list {
+  .contact-inline {
     list-style: none;
     padding: 0;
     margin: 0;

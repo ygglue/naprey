@@ -37,6 +37,15 @@ const {
 
     <!-- Favicon placeholder — replace public/favicon.svg with client's icon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Enable scroll-reveal ONLY when motion is allowed. Without this class the
+         pre-reveal hidden state never applies, so no-JS / reduced-motion renders
+         show all content normally. Runs pre-paint to avoid a flash. -->
+    <script is:inline>
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('js-reveal');
+      }
+    </script>
   </head>
 
   <body>
@@ -44,6 +53,27 @@ const {
     <a class="skip-link" href="#main-content">Skip to main content</a>
 
     <slot />
+
+    <!-- Scroll-reveal: reveal sections as they enter view. Guarded so it only
+         runs when motion is allowed (the .js-reveal class gate). -->
+    <script>
+      const root = document.documentElement;
+      const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      if (els.length && root.classList.contains('js-reveal')) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                io.unobserve(entry.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -10% 0px', threshold: 0.12 }
+        );
+        els.forEach((el) => io.observe(el));
+      }
+    </script>
 
     <!-- GHL Chat Widget — loads only when location ID is configured in .env -->
     {ghl.locationId && (

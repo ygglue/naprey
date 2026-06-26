@@ -1,0 +1,41 @@
+---
+import { ctaBanner } from '../data/content';
+---
+
+<section class="section section--ink cta-banner" aria-labelledby="cta-banner-heading">
+  <div class="container cta-inner">
+    <div class="cta-text">
+      <h2 id="cta-banner-heading" data-reveal>{ctaBanner.heading}</h2>
+      <p data-reveal>{ctaBanner.body}</p>
+    </div>
+    <a href={ctaBanner.cta.href} class="btn btn-primary cta-action" data-reveal>
+      {ctaBanner.cta.label}
+    </a>
+  </div>
+</section>
+
+<style>
+  .cta-banner { padding-block: var(--space-xl); }
+
+  .cta-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-lg);
+  }
+
+  .cta-text { max-width: 46ch; }
+  .cta-text h2 { margin-bottom: var(--space-sm); }
+  .cta-text p {
+    color: var(--paper-soft);
+    font-size: var(--text-lg);
+    line-height: 1.5;
+  }
+
+  .cta-action { flex-shrink: 0; }
+
+  @media (max-width: 520px) {
+    .cta-action { width: 100%; }
+  }
+</style>

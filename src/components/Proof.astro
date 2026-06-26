@@ -1,0 +1,66 @@
+---
+import { proof } from '../data/content';
+---
+
+<section class="proof" aria-label="Recognition and credibility">
+  <div class="container proof-inner">
+    <p class="proof-lead">{proof.lead}</p>
+    <ul class="proof-list" role="list">
+      {proof.items.map((item) => (
+        <li class="proof-item">{item}</li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .proof {
+    background: var(--paper-2);
+    border-block: 1px solid var(--line);
+    padding-block: var(--space-lg);
+  }
+
+  .proof-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-sm) var(--space-lg);
+  }
+
+  .proof-lead {
+    flex-shrink: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-md);
+    font-style: italic;
+    color: var(--accent-deep);
+    max-width: none;
+  }
+
+  .proof-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .proof-item {
+    position: relative;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--ink);
+    padding-left: 1rem;
+  }
+  /* accent tick instead of a bullet — keeps the line editorial, not list-y */
+  .proof-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+</style>
