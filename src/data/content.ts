@@ -209,11 +209,13 @@ export const recognition: RecognitionItem[] = [
     title: "Australia Awards Scholar",
     body: "Full Australian Government scholarship to Curtin University, Perth.",
     year: "2017–2018",
+    image: 'milestones/grad.webp',
   },
   {
     title: "Pinoy Big Brother Season 4 Housemate",
     body: "Amplified the disability-inclusion message to millions of Filipinos.",
     year: "2011–2012",
+    image: 'milestones/bigbrother.webp',
   },
   {
     title: "Air Asia Philippines Brand Ambassador",
@@ -225,21 +227,25 @@ export const recognition: RecognitionItem[] = [
     title: "Cebuana Lhuillier Happiest Pinoy Ambassador",
     body: "Named ambassador and Happiest Pinoy Finalist for resilience and impact.",
     year: "2016–2017",
+    image: 'milestones/cebuana.webp',
   },
   {
     title: "The Good Story Award",
     body: "Our Better World, Singapore — turning adversity into purpose.",
     year: "2014",
+    image: 'milestones/thegoodstoryaward.webp',
   },
   {
     title: "Blogger of the Year & Best Advocacy Blogger",
     body: "Davao Bloggers Society and Mindanao Blog Awards.",
     year: "2013",
+    image: 'milestones/bloggeraward.webp',
   },
   {
     title: "Rappler Do More Awards — Luminary Finalist",
     body: "Recognised by Rappler as a community changemaker.",
     year: "2013",
+    image: 'milestones/rappler.webp',
   },
 ];
 
