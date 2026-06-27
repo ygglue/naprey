@@ -4,6 +4,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 ---
 
 <section id="recognition" class="section section--alt rec-section" aria-labelledby="recognition-heading">
+  <div class="rec-bg" aria-hidden="true" id="rec-bg"></div>
   <div class="container">
     <header class="rec-head" data-reveal>
       <span class="kicker">Recognition</span>
@@ -57,7 +58,23 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 </section>
 
 <style>
-  .rec-section { overflow: hidden; }
+  .rec-section { overflow: hidden; position: relative; }
+
+  .rec-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-size: cover;
+    background-position: center top;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+
+  .rec-section > .container {
+    position: relative;
+    z-index: 1;
+  }
   .rec-head { margin-bottom: var(--space-xl); }
   .rec-head h2 { margin-top: var(--space-xs); }
 
@@ -240,13 +257,27 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     });
   }
 
+  const recBg = document.getElementById('rec-bg') as HTMLElement | null;
+
   function updateMeta() {
     if (counter) counter.textContent = `${step + 1} / ${total}`;
     const front = cards[order[0]];
     const title = front.querySelector('h3')?.textContent ?? '';
     const year  = front.querySelector('.card-year')?.textContent ?? '';
     if (live) live.textContent = `Now showing: ${title}${year ? `, ${year}` : ''}`;
+
+    if (recBg) {
+      const cardImg = front.querySelector<HTMLImageElement>('.card-photo img');
+      if (cardImg?.src) {
+        recBg.style.backgroundImage = `url(${cardImg.src})`;
+        recBg.style.opacity = '0.1';
+      } else {
+        recBg.style.opacity = '0';
+      }
+    }
   }
+
+  updateMeta(); // set bg for initial front card
 
   function advance() {
     if (animating) return;
