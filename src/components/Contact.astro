@@ -68,6 +68,21 @@ import { ghl, ghlReady } from '../data/ghl';
   </div>
 </section>
 
+<script>
+  // Auto-resize GHL iframe when it broadcasts its height via postMessage
+  const formFrame = document.querySelector<HTMLIFrameElement>('.ghl-form-frame');
+  const calFrame  = document.querySelector<HTMLIFrameElement>('.ghl-calendar-frame');
+
+  window.addEventListener('message', (e) => {
+    if (e.origin !== 'https://api.leadconnectorhq.com') return;
+    const data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
+    const height = data?.height ?? data?.['iframe-height'];
+    if (!height || typeof height !== 'number') return;
+    if (e.source === formFrame?.contentWindow) formFrame.style.height = `${height}px`;
+    if (e.source === calFrame?.contentWindow)  calFrame.style.height  = `${height}px`;
+  });
+</script>
+
 <style>
   .contact-head { margin-bottom: var(--space-xl); max-width: 60ch; }
   .contact-head h2 { margin-block: var(--space-xs) var(--space-md); }
@@ -100,7 +115,7 @@ import { ghl, ghlReady } from '../data/ghl';
     border-radius: 12px;
     display: block;
   }
-  .ghl-form-frame { min-height: 520px; }
+  .ghl-form-frame { min-height: 750px; }
   .ghl-calendar-frame { min-height: 700px; }
   @media (max-width: 640px) {
     .ghl-form-frame { min-height: 400px; }
