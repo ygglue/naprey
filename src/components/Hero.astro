@@ -21,9 +21,13 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
         Naprey<span class="hero-name-2">Almario</span>
       </h1>
 
+      <p class="hero-brand" data-reveal>{hero.brand}</p>
+
       <p class="hero-tagline" data-reveal>{hero.tagline}</p>
 
       <p class="hero-intro" data-reveal>{hero.intro}</p>
+
+      <p class="hero-secondary" data-reveal>{hero.secondary}</p>
 
       <div class="hero-ctas" data-reveal>
         <a href={hero.cta.href} class="btn btn-primary">{hero.cta.label}</a>
@@ -134,6 +138,15 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     color: var(--accent);
   }
 
+  .hero-brand {
+    font-family: var(--font-brand);
+    font-style: italic;
+    font-weight: 500;
+    font-size: var(--text-xl);
+    color: var(--accent-deep);
+    margin-bottom: var(--space-md);
+  }
+
   .hero-tagline {
     position: relative;
     font-family: var(--font-display);
@@ -164,6 +177,14 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     line-height: 1.5;
     color: var(--ink-soft);
     max-width: 52ch;
+    margin-bottom: var(--space-md);
+  }
+
+  .hero-secondary {
+    font-size: var(--text-base);
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 52ch;
     margin-bottom: var(--space-lg);
   }
 
@@ -181,6 +202,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
       font-size: clamp(2.2rem, 0.8rem + 7vw, 4rem);
       margin-bottom: var(--space-sm);
     }
+    .hero-brand { font-size: var(--text-lg); margin-bottom: var(--space-sm); }
     .hero-tagline {
       font-size: var(--text-xl);
       margin-bottom: var(--space-sm);
@@ -190,6 +212,8 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
       line-height: 1.45;
       margin-bottom: var(--space-md);
     }
+    /* Supplementary teaser text — cut to keep the CTA visible without scrolling */
+    .hero-secondary { display: none; }
   }
 
   /* Below desktop: text fills width, photo as right overlay — no in-between state */
@@ -208,6 +232,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     .hero-role { flex-basis: 100%; }
     .hero-eyebrow { margin-bottom: var(--space-md); }
     .hero-name { margin-bottom: var(--space-lg); }
+    .hero-brand { font-size: var(--text-lg); margin-bottom: var(--space-md); }
     .hero-tagline {
       font-size: var(--text-xl);
       margin-bottom: var(--space-lg);
@@ -215,8 +240,10 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     .hero-tagline::before { font-size: clamp(3.5rem, 2rem + 6vw, 5.5rem); }
     .hero-intro {
       font-size: var(--text-base);
-      margin-bottom: var(--space-xl);
+      margin-bottom: var(--space-md);
     }
+    /* Supplementary teaser text — cut to keep the CTA reachable without excess scroll */
+    .hero-secondary { display: none; }
     .hero-ctas { flex-direction: column; align-items: stretch; }
     .hero-ctas .btn { width: 100%; }
     .hero-media { width: clamp(270px, 74vw, 340px); }

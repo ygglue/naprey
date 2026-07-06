@@ -13,18 +13,21 @@ export const nav = {
     { label: "Story", href: "#story" },
     { label: "Work", href: "#work" },
     { label: "Advocacy", href: "#advocacy" },
-    { label: "Timeline", href: "#timeline" },
+    { label: "Gallery", href: "#gallery" },
     { label: "Recognition", href: "#recognition" },
   ],
 };
 
 export const hero = {
   name: "Naprey Almario",
-  title: "Disability Champion · Entrepreneur",
+  brand: "Behind the Rolling Chair",
+  title: "Disability Inclusion Champion · Accessible Travel Advocate · Entrepreneur",
   location: "Davao City, Philippines",
-  tagline: "I lost the ability to walk, but never the courage to move forward.",
+  tagline: "Beyond every wheelchair is a person with dreams, purpose and limitless potential.",
   intro:
-    "Polio survivor. Advocate, educator, and entrepreneur based in Davao City, Philippines, proving every day that disability is not inability, and helping others travel, study, speak, and lead.",
+    "I am Naprey Almario, a Filipino disability champion committed to proving that disability is never a barrier to making an impact. Through accessible travel, community empowerment and business, I strive to create opportunities, inspire resilience and help build a more inclusive society.",
+  secondary:
+    "This page shares my journey — from overcoming challenges to building businesses, promoting accessible tourism, supporting persons with disabilities and encouraging others to pursue their dreams regardless of life's obstacles.",
   cta: { label: "Work with me", href: "#contact" },
   secondaryCta: { label: "Read my story", href: "#story" },
 };
@@ -63,8 +66,8 @@ export const story = {
   heading: "My Story",
   paragraphs: [
     "At eight years old, polio paralyzed both my lower extremities. For nearly a year, I was in hospitals. The active kid I once was was replaced by someone who would never walk again. I questioned everything. But eventually, I made a decision: my disability would shape my life, but it would not define my future.",
-    "That decision changed the direction of my life. I pursued a BS in IT, delivered the graduation speech, became a college instructor, earned a master's degree, and received an Australia Awards Scholarship to Curtin University. Along the way, I realized my purpose wasn't just to succeed. It was to create opportunities for others.",
-    "I founded Behind the Rolling Chair to champion accessibility, served on the Regional Development Council XI, launched an accessible-tourism travel agency, and opened a top-performing Cebuana Lhuillier branch where I intentionally hire people with disabilities. Today, everything I do is driven by one belief: disability should never limit someone's opportunity to live, work, or thrive.",
+    "That decision changed the direction of my life. I pursued a BS in IT, delivered the graduation speech, became a college instructor, and later an Associate Professor teaching Information Technology at the University of Mindanao. I earned a master's degree and an Australia Awards Scholarship to Curtin University in Perth. In 2011, I joined Pinoy Big Brother Season 4, where audiences came to know me as the \"Strong Wheeled Teacher ng Davao\" — a nickname that carried the disability-inclusion message to millions of Filipinos. Along the way, I realized my purpose wasn't just to succeed. It was to create opportunities for others.",
+    "I founded Behind the Rolling Chair to champion accessibility, launched an accessible-tourism travel agency, opened a top-performing Cebuana Lhuillier branch where I intentionally hire people with disabilities, and built businesses including Hub International Education and Laundry Vuitton. I also lead the Association of Differently-abled Persons (ADAP) and serve as GEDSI Convenor for the Australia Alumni Communities Philippines, and I was appointed Private Sector Representative for the PWD and Senior Citizen sector on the Regional Development Council XI for the 2025–2028 term. In 2025, I was named a Top 10 finalist for Cebuana Lhuillier's \"Happiest Pinoy\" award for creating inclusive livelihood opportunities for persons with disabilities. Today, everything I do is driven by one belief: disability should never limit someone's opportunity to live, work, or thrive.",
   ],
   pullQuote:
     "Purpose is greater than circumstance.",
@@ -112,99 +115,56 @@ export const work: WorkItem[] = [
 ];
 
 export type AdvocacyItem = {
-  name: string;
-  role: string;
+  title: string;
   description: string;
-  since?: string;
+  image?: string; /* path in /public, e.g. "advocacy/accessibility.webp" — omit for placeholder */
 };
 
 export const advocacy: AdvocacyItem[] = [
   {
-    name: "Behind the Rolling Chair",
-    role: "Founder",
-    since: "2010",
+    title: "Accessibility",
     description:
-      "Platform and foundation promoting accessibility and running the Back to School Gift Giving Project across Mindanao.",
+      "Accessibility audits, consultation and assessment. Training on accessible tours. Accessibility content creation. Social media campaigns and brand collaboration.",
   },
   {
-    name: "Regional Development Council XI",
-    role: "Private Sector Representative (PWD / Senior Citizens)",
-    since: "2022",
+    title: "Disability Inclusion",
     description:
-      "Ensures PWD and Senior Citizen sectors are represented in Region XI's development plans and policy.",
+      "Disability awareness seminars. Customer service training for serving guests with disabilities. Inclusive workplace training.",
   },
   {
-    name: "GEDSI Convenor, Australia Alumni Communities Philippines",
-    role: "Lead Convenor",
-    since: "2022",
+    title: "Speaking Engagements",
     description:
-      "Leads the Australia Alumni community championing Gender Equality, Disability, and Social Inclusion in the Philippines.",
+      "Inspirational keynotes. Entrepreneurship and resilience. Livelihood and social entrepreneurship.",
   },
   {
-    name: "Association of Differently-abled Persons, Inc.",
-    role: "President",
+    title: "Community Projects",
     description:
-      "Former president championing the rights and welfare of persons with disability.",
+      "Community outreach programs. Fundraising events.",
+  },
+  {
+    title: "Partnerships",
+    description:
+      "Brands and organizations Naprey has partnered with to advance accessibility and inclusion.",
   },
 ];
 
-export type TimelineEntry = {
-  period: string;
-  role: string;
-  organisation: string;
+// Client-requested running text — not a bulleted/CV-style list.
+export const recognition = {
+  heading: "Recognition",
+  body:
+    "Private Sector Representative — Regional Development Council XI, Australia Awards Scholar, Biennial Recognition Award (Nominee) — National Council on Disability Affairs, Happiest Pinoy (Entrepreneur Category) — Cebuana Lhuillier, Air Asia Philippines Brand Ambassador, Pinoy Big Brother (Season 4) Housemate.",
 };
 
-export const timeline: TimelineEntry[] = [
-  {
-    period: "2022 – Present",
-    role: "Private Sector Representative (PWD/SC)",
-    organisation: "Regional Development Council XI",
-  },
-  {
-    period: "2022 – Present",
-    role: "GEDSI Convenor",
-    organisation: "Australia Alumni Communities Philippines",
-  },
-  {
-    period: "2019 – Present",
-    role: "Managing Director",
-    organisation: "Hub International Education – Davao",
-  },
-  {
-    period: "2015 – Present",
-    role: "Travel Sales Consultant",
-    organisation: "Almario Travel and Tours",
-  },
-  {
-    period: "2019 – 2022",
-    role: "College IT Instructor",
-    organisation: "University of Mindanao",
-  },
-  {
-    period: "2017 – 2018",
-    role: "Australia Awards Scholar",
-    organisation: "Curtin University, Perth WA",
-  },
-  {
-    period: "2012 – 2014",
-    role: "Operations Manager",
-    organisation: "Aaron IT Business International",
-  },
-  {
-    period: "2009 – 2012",
-    role: "College IT Instructor",
-    organisation: "Holy Child College of Davao",
-  },
-];
-
-export type RecognitionItem = {
+export type MilestoneItem = {
   title: string;
   body: string;
   year?: string;
-  image?: string; /* path in /public, e.g. "/recognition/australia-awards.jpg" */
+  image?: string; /* path in /public, e.g. "milestones/australia-awards.webp" */
 };
 
-export const recognition: RecognitionItem[] = [
+// Preserved from the previous card-carousel Recognition section. Not currently
+// rendered anywhere — kept as a candidate for a future Gallery/Updates feature.
+export const milestones: MilestoneItem[] = [
   {
     title: "Australia Awards Scholar",
     body: "Full Australian Government scholarship to Curtin University, Perth.",
@@ -249,6 +209,55 @@ export const recognition: RecognitionItem[] = [
   },
 ];
 
+export type GalleryCategory = {
+  name: string;
+  slots: number; /* placeholder image count until real photos arrive */
+};
+
+export const gallery = {
+  kicker: "In the field",
+  heading: "Gallery",
+  intro:
+    "Photos from community outreach, accessible travel, and speaking engagements — placeholders until real photos from the field are added.",
+  categories: [
+    { name: "Community Outreach", slots: 3 },
+    { name: "Travel Photos", slots: 3 },
+    { name: "Events", slots: 3 },
+  ] as GalleryCategory[],
+};
+
+export type PartnershipItem = {
+  name: string;
+  description: string;
+  logo?: string; /* path in /public, e.g. "partners/brand.webp" */
+};
+
+export const partnerships = {
+  kicker: "Partnerships",
+  heading: "Brands I've partnered with",
+  intro: "Brands and organizations Naprey has partnered with — logos to be added.",
+  items: [
+    { name: "Partner brand", description: "Placeholder — replace with a real partner name and logo." },
+    { name: "Partner brand", description: "Placeholder — replace with a real partner name and logo." },
+    { name: "Partner brand", description: "Placeholder — replace with a real partner name and logo." },
+  ] as PartnershipItem[],
+};
+
+export type UpdateItem = {
+  date: string;
+  title: string;
+  body: string;
+};
+
+export const updates = {
+  kicker: "News",
+  heading: "Latest updates",
+  items: [
+    { date: "Placeholder date", title: "Update title goes here", body: "Placeholder — replace with a real announcement." },
+    { date: "Placeholder date", title: "Update title goes here", body: "Placeholder — replace with a real announcement." },
+  ] as UpdateItem[],
+};
+
 export const contact = {
   heading: "Get in Touch",
   intro:
@@ -270,6 +279,6 @@ export const contact = {
 
 export const footer = {
   name: "Naprey Almario",
-  tagline: "Disability Champion · Entrepreneur",
+  tagline: "Disability Inclusion Champion · Accessible Travel Advocate · Entrepreneur",
   copy: `© ${new Date().getFullYear()} Naprey Almario. All rights reserved.`,
 };

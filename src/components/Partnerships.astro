@@ -1,0 +1,73 @@
+---
+import { partnerships } from '../data/content';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+
+<section id="partnerships" class="section section--alt" aria-labelledby="partnerships-heading">
+  <div class="container">
+    <header class="ptr-head" data-reveal>
+      <span class="kicker">{partnerships.kicker}</span>
+      <h2 id="partnerships-heading">{partnerships.heading}</h2>
+      <p class="ptr-intro">{partnerships.intro}</p>
+    </header>
+
+    <ul class="ptr-list" role="list">
+      {partnerships.items.map((item) => (
+        <li class="ptr-item" data-reveal>
+          <div class="ptr-logo">
+            {item.logo
+              ? <img src={`${base}${item.logo}`} alt={item.name} loading="lazy" />
+              : <span class="ptr-mark" aria-hidden="true">{item.name.charAt(0)}</span>
+            }
+          </div>
+          <p class="ptr-desc">{item.description}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .ptr-head { margin-bottom: var(--space-xl); max-width: 60ch; }
+  .ptr-head h2 { margin-block: var(--space-xs) var(--space-md); }
+  .ptr-intro {
+    font-size: var(--text-lg);
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  .ptr-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+    gap: var(--space-lg);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .ptr-item { text-align: center; }
+
+  .ptr-logo {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto var(--space-sm);
+    background: var(--paper);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .ptr-logo img { width: 100%; height: 100%; object-fit: cover; }
+  .ptr-mark {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    color: var(--accent);
+  }
+
+  .ptr-desc {
+    font-size: var(--text-sm);
+    color: var(--ink-soft);
+    max-width: none;
+  }
+</style>
