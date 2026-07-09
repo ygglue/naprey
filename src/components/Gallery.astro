@@ -13,9 +13,15 @@ import { gallery } from '../data/content';
     {gallery.categories.map((category) => (
       <div class="gal-category" data-reveal>
         <h3>{category.name}</h3>
-        <ul class="gal-grid" role="list">
-          {Array.from({ length: category.slots }).map(() => (
-            <li class="gal-slot" aria-hidden="true"></li>
+        <ul class="gal-strip" role="list">
+          {category.items.map((item) => (
+            <li class="gal-item" tabindex="0" aria-label={item.alt}>
+              {item.src
+                ? <img src={item.src} alt={item.alt} loading="lazy" />
+                : <div class="gal-placeholder" aria-hidden="true" />
+              }
+              <span class="gal-label" aria-hidden="true">{item.label}</span>
+            </li>
           ))}
         </ul>
       </div>
@@ -36,19 +42,87 @@ import { gallery } from '../data/content';
   .gal-category:first-of-type { margin-top: 0; }
   .gal-category h3 { margin-bottom: var(--space-sm); }
 
-  .gal-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
-    gap: var(--space-sm);
+  /* ── Expand-on-hover strip ── */
+  .gal-strip {
+    display: flex;
+    gap: 0.5rem;
+    height: clamp(180px, 30vw, 440px);
     list-style: none;
     margin: 0;
     padding: 0;
   }
 
-  .gal-slot {
-    aspect-ratio: 4 / 3;
+  .gal-item {
+    flex: 1;
+    overflow: hidden;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    transition: flex 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Shrink non-active siblings */
+  .gal-strip:has(.gal-item:hover) .gal-item,
+  .gal-strip:has(.gal-item:focus-visible) .gal-item { flex: 0.3; }
+
+  /* Expand the active item — higher specificity than the shrink rule above */
+  .gal-strip:has(.gal-item:hover) .gal-item:hover,
+  .gal-strip:has(.gal-item:focus-visible) .gal-item:focus-visible { flex: 3; }
+
+  .gal-item:focus-visible { box-shadow: 0 0 0 3px var(--accent); }
+
+  .gal-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+  }
+
+  .gal-placeholder {
+    width: 100%;
+    height: 100%;
     background: var(--paper-2);
     border: 1px dashed var(--line);
-    border-radius: 10px;
+  }
+
+  .gal-label {
+    position: absolute;
+    bottom: 0.6rem;
+    left: 0.75rem;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+  }
+  .gal-item:hover .gal-label,
+  .gal-item:focus-visible .gal-label { opacity: 1; transform: none; }
+
+  /* Label on real photo — white with shadow for legibility */
+  .gal-item:has(img) .gal-label {
+    color: var(--paper);
+    text-shadow: 0 1px 4px rgba(26, 20, 16, 0.5);
+  }
+
+  /* ── Mobile: 2-col grid, no expand ── */
+  @media (max-width: 599px) {
+    .gal-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      height: auto;
+      gap: var(--space-sm);
+    }
+    .gal-item { flex: none; aspect-ratio: 4 / 3; }
+    .gal-label { opacity: 1; transform: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gal-item { transition: none; }
+    .gal-label { transition: none; }
   }
 </style>

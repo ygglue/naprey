@@ -239,13 +239,19 @@ strong { font-weight: 600; }
 
 /* ─── Subtle scroll-reveal ───────────────────────────────────────────────────
    Content is visible by DEFAULT. The pre-reveal hidden state applies only after
-   JS adds `.js-reveal` to <html>, so no-JS / headless renders never ship blank. */
-.js-reveal [data-reveal] {
+   JS adds `.js-reveal` to <html>, so no-JS / headless renders never ship blank.
+   [data-reveal-strict] shares the same visual treatment but is observed with a
+   stricter rootMargin (see Hero.astro) — for elements that would otherwise sit
+   right at the edge of the initial viewport and "reveal" before any scrolling
+   actually happens. */
+.js-reveal [data-reveal],
+.js-reveal [data-reveal-strict] {
   opacity: 0;
   transform: translateY(1.25rem);
   transition: opacity 0.55s ease, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.js-reveal [data-reveal].is-visible {
+.js-reveal [data-reveal].is-visible,
+.js-reveal [data-reveal-strict].is-visible {
   opacity: 1;
   transform: none;
 }
@@ -258,6 +264,7 @@ strong { font-weight: 600; }
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .js-reveal [data-reveal] { opacity: 1; transform: none; }
+  .js-reveal [data-reveal],
+  .js-reveal [data-reveal-strict] { opacity: 1; transform: none; }
   .btn:hover { transform: none; }
 }

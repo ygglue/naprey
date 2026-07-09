@@ -1,0 +1,14 @@
+{
+  "mcp": true,
+  "skills": [
+    "claude"
+  ],
+  "agentSettings": {
+    "opencode": {
+      "model": "opencode-go/glm-5.2"
+    },
+    "claude-code": {
+      "model": "sonnet"
+    }
+  }
+}

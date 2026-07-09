@@ -99,6 +99,22 @@ import { nav, hero } from '../data/content';
     padding: 0.5rem 1.1rem;
     font-size: var(--text-sm);
     font-weight: 800;
+    /* Space is reserved at all times so neighboring nav items never shift —
+       only opacity/transform animate. Hidden until the hero's own primary
+       CTA scrolls behind the nav (see the IntersectionObserver below), at
+       which point it reads as if that button landed here. */
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-14px) scale(0.85);
+    transition: opacity 0.3s ease, transform 0.5s cubic-bezier(0.3, 1.6, 0.6, 1);
+  }
+  .site-header.show-cta .nav-cta {
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-cta { transition: none; }
   }
 
   /* Hamburger — hidden on desktop */
@@ -215,5 +231,22 @@ import { nav, hero } from '../data/content';
     window.matchMedia('(min-width: 881px)').addEventListener('change', (e) => {
       if (e.matches) setOpen(false);
     });
+  }
+
+  // The nav's own CTA stays hidden until the hero's primary CTA scrolls
+  // behind the nav bar — at that point it appears here, reading as if the
+  // button had landed on the nav rather than living in both places at once.
+  const heroCta = document.getElementById('hero-primary-cta');
+  if (header && heroCta) {
+    const navH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 0;
+    // isIntersecting alone can't tell "hasn't scrolled into view yet" (still
+    // below the fold) apart from "already scrolled past" — both report
+    // false. Read the actual edge instead: only show once the CTA's bottom
+    // has gone behind the nav.
+    const io = new IntersectionObserver(
+      ([entry]) => header.classList.toggle('show-cta', entry.boundingClientRect.bottom <= navH),
+      { rootMargin: `-${navH}px 0px 0px 0px`, threshold: [0, 1] }
+    );
+    io.observe(heroCta);
   }
 </script>

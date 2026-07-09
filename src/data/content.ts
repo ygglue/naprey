@@ -209,20 +209,61 @@ export const milestones: MilestoneItem[] = [
   },
 ];
 
+export type GalleryItem = {
+  src?: string;  /* omit until real photo is ready */
+  alt: string;
+  label: string;
+};
+
 export type GalleryCategory = {
   name: string;
-  slots: number; /* placeholder image count until real photos arrive */
+  items: GalleryItem[];
 };
 
 export const gallery = {
   kicker: "In the field",
   heading: "Gallery",
   intro:
-    "Photos from community outreach, accessible travel, and speaking engagements — placeholders until real photos from the field are added.",
+    "Photos from community outreach, accessible travel, and speaking engagements.",
   categories: [
-    { name: "Community Outreach", slots: 3 },
-    { name: "Travel Photos", slots: 3 },
-    { name: "Events", slots: 3 },
+    {
+      name: "Community Outreach",
+      items: [
+        { src: "/community-outreach/back-to-school-1.jpg", alt: "Back to School outreach event", label: "Back to School" },
+        { src: "/community-outreach/back-to-school-2.jpg", alt: "Back to School project", label: "Back to School" },
+        { src: "/community-outreach/back-to-school-3.jpg", alt: "Back 2 School project", label: "Back to School" },
+        { src: "/community-outreach/back-to-school-4.jpg", alt: "Back to School project event", label: "Back to School" },
+        { src: "/community-outreach/back-to-school-5.jpg", alt: "Back to School project photo", label: "Back to School" },
+        { src: "/community-outreach/pwd-group.jpg", alt: "Leading a PWD group", label: "PWD Group" },
+        { src: "/community-outreach/pwd-campaign.jpg", alt: "PWD campaign", label: "PWD Campaign" },
+        { src: "/community-outreach/pwd-gift-giving.jpg", alt: "PWD gift giving event", label: "PWD Gift Giving" },
+        { src: "/community-outreach/pandemic-gift-giving.png", alt: "Pandemic gift giving outreach", label: "Pandemic Relief" },
+        { src: "/community-outreach/community-1.jpg", alt: "Community outreach event", label: "Outreach" },
+        { src: "/community-outreach/community-2.jpg", alt: "Community outreach event", label: "Outreach" },
+        { src: "/community-outreach/community-3.jpg", alt: "Community outreach event", label: "Outreach" },
+        { src: "/community-outreach/community-4.jpg", alt: "Community outreach event", label: "Outreach" },
+        { src: "/community-outreach/community-5.jpg", alt: "Community outreach event", label: "Outreach" },
+        { src: "/community-outreach/community-6.jpg", alt: "Community outreach event", label: "Outreach" },
+      ],
+    },
+    {
+      name: "Travel Photos",
+      items: [
+        { alt: "Travel photo 1", label: "01" },
+        { alt: "Travel photo 2", label: "02" },
+        { alt: "Travel photo 3", label: "03" },
+        { alt: "Travel photo 4", label: "04" },
+      ],
+    },
+    {
+      name: "Events",
+      items: [
+        { alt: "Event photo 1", label: "01" },
+        { alt: "Event photo 2", label: "02" },
+        { alt: "Event photo 3", label: "03" },
+        { alt: "Event photo 4", label: "04" },
+      ],
+    },
   ] as GalleryCategory[],
 };
 

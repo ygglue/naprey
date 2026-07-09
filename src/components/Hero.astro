@@ -5,48 +5,52 @@ const roles = hero.title.split(' · ');
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 ---
 
-<section class="hero" aria-labelledby="hero-name">
-  <div class="hero-inner container">
-    <div class="hero-text">
-      <p class="hero-eyebrow" data-reveal>
-        {roles.map((role, i) => (
-          <Fragment>
-            {i > 0 && <span class="hero-dot" aria-hidden="true">·</span>}
-            <span class="hero-role">{role}</span>
-          </Fragment>
-        ))}
-      </p>
+<div class="hero-wrap">
+  <section class="hero" aria-labelledby="hero-name">
+    <div class="hero-inner container">
+      <div class="hero-text">
+        <p class="hero-eyebrow" data-reveal>
+          {roles.map((role, i) => (
+            <Fragment>
+              {i > 0 && <span class="hero-dot" aria-hidden="true">·</span>}
+              <span class="hero-role">{role}</span>
+            </Fragment>
+          ))}
+        </p>
 
-      <h1 id="hero-name" class="hero-name" data-reveal>
-        Naprey<span class="hero-name-2">Almario</span>
-      </h1>
+        <h1 id="hero-name" class="hero-name" data-reveal>
+          Naprey<span class="hero-name-2">Almario</span>
+        </h1>
 
-      <p class="hero-brand" data-reveal>{hero.brand}</p>
+        <p class="hero-brand" data-reveal>{hero.brand}</p>
 
-      <p class="hero-tagline" data-reveal>{hero.tagline}</p>
+        <p class="hero-tagline" data-reveal>{hero.tagline}</p>
 
-      <p class="hero-intro" data-reveal>{hero.intro}</p>
+        <p class="hero-intro" data-reveal-strict>{hero.intro}</p>
 
-      <p class="hero-secondary" data-reveal>{hero.secondary}</p>
+        <p class="hero-secondary" data-reveal-strict>{hero.secondary}</p>
+      </div>
 
-      <div class="hero-ctas" data-reveal>
-        <a href={hero.cta.href} class="btn btn-primary">{hero.cta.label}</a>
-        <a href={hero.secondaryCta.href} class="btn btn-outline">{hero.secondaryCta.label}</a>
+      <div class="hero-media">
+        <img
+          src={`${base}naprey.webp`}
+          alt="Naprey Almario, disability advocate and entrepreneur from Davao City, Philippines"
+          width="666"
+          height="666"
+          fetchpriority="high"
+          data-reveal
+        />
       </div>
     </div>
+  </section>
 
-    <div class="hero-media">
-      <img
-        src={`${base}naprey.webp`}
-        alt="Naprey Almario, disability advocate and entrepreneur from Davao City, Philippines"
-        width="666"
-        height="666"
-        fetchpriority="high"
-        data-reveal
-      />
+  <div class="hero-ctas-rail">
+    <div class="hero-ctas">
+      <a id="hero-primary-cta" href={hero.cta.href} class="btn btn-primary">{hero.cta.label}</a>
+      <a href={hero.secondaryCta.href} class="btn btn-outline">{hero.secondaryCta.label}</a>
     </div>
   </div>
-</section>
+</div>
 
 <style>
   .hero {
@@ -108,8 +112,9 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     .hero-media {
       right: auto;
       left: 72%;
-      transform: translate(-50%, -62%);
-      width: clamp(460px, 50vw, 760px);
+      top: 45%;
+      transform: translate(-50%, -70%);
+      width: clamp(447px, 49vw, 739px);
     }
   }
 
@@ -151,12 +156,12 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     position: relative;
     font-family: var(--font-display);
     font-style: italic;
-    font-size: var(--text-2xl);
+    font-size: clamp(1.7rem, 1.1rem + 2.5vw, 2.6rem);
     line-height: 1.18;
     color: var(--ink);
     max-width: 24ch;
-    margin-bottom: var(--space-md);
-    padding-left: clamp(2rem, 1rem + 3vw, 3.5rem);
+    margin-bottom: var(--space-sm);
+    padding-left: clamp(1.75rem, 0.9rem + 2.5vw, 3rem);
   }
   /* Oversized hanging quotation mark — replaces the old left-stripe border */
   .hero-tagline::before {
@@ -166,7 +171,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     top: -0.35em;
     font-family: var(--font-display);
     font-style: normal;
-    font-size: clamp(4rem, 2rem + 8vw, 7rem);
+    font-size: clamp(3.4rem, 1.7rem + 6.5vw, 5.8rem);
     line-height: 1;
     color: var(--accent);
     opacity: 0.28;
@@ -188,10 +193,49 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     margin-bottom: var(--space-lg);
   }
 
+  .hero-wrap {
+    position: relative;
+  }
+
+  /* CTAs live in a rail that spans the full hero height. They stick to the
+     bottom of the viewport while the hero scrolls past, then release right
+     as the hero's box ends (the sticky container). `.hero` keeps its own
+     overflow:hidden for the photo/pattern clip, but that container is a
+     sibling here — not an ancestor — so position:sticky below still
+     resolves against the real viewport, not a clipped box. */
+  .hero-ctas-rail {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: var(--space-lg) clamp(1.1rem, 0.5rem + 3vw, 3rem);
+    pointer-events: none;
+    z-index: 2;
+  }
+  /* Invisible spacer flex item — sets the CTAs' natural (unstuck) position
+     near the bottom of the rail, so they're already resting against the
+     sticky offset below at page load instead of appearing mid-hero. */
+  .hero-ctas-rail::before {
+    content: '';
+    flex: 0 0 90%;
+  }
+  .hero-ctas-rail .hero-ctas {
+    pointer-events: auto;
+    position: sticky;
+    bottom: var(--space-lg);
+  }
+
   .hero-ctas {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-sm);
+  }
+
+  /* Desktop (≥860px): CTAs sit right-aligned instead of stretched full-width. */
+  @media (min-width: 860px) {
+    .hero-ctas-rail { align-items: flex-end; }
   }
 
   /* Short viewports (laptops ~800px tall, landscape phones): compress the
@@ -212,18 +256,45 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
       line-height: 1.45;
       margin-bottom: var(--space-md);
     }
-    /* Supplementary teaser text — cut to keep the CTA visible without scrolling */
-    .hero-secondary { display: none; }
+    .hero-secondary {
+      font-size: var(--text-sm);
+      line-height: 1.45;
+    }
   }
 
   /* Below desktop: text fills width, photo as right overlay — no in-between state */
   @media (max-width: 859px) {
     .hero-text { max-width: none; }
+    .hero-name { margin-bottom: 5rem; }
+    /* Bottom padding is measured and set in JS as CTA card height + 8px
+       (4px breathing room on each side of the card at the section boundary).
+       The fallback covers the flash before JS runs. */
+    .hero { padding-bottom: var(--hero-cta-gap, calc(var(--space-lg) + 4rem)); }
+    .hero-secondary { margin-bottom: 4px; }
+    /* Full-width, so — unlike desktop's right-aligned rail sitting clear
+       over the photo — it would otherwise sit directly on top of the body
+       text as it scrolls past. An opaque floating-bar treatment keeps it
+       readable instead of letting paragraph text bleed through. */
+    .hero-ctas-rail .hero-ctas {
+      background: var(--paper);
+      padding: var(--space-sm);
+      border-radius: 14px;
+      box-shadow: var(--shadow-md);
+      bottom: 4px;
+    }
     .hero-media {
-      top: 16%;
+      top: calc(16% - 60px);
       right: 0;
       width: clamp(200px, 48vw, 480px);
+      /* The base rule's translateY(-38%) is a desktop centering trick; left
+         active here it stacks with top:16% and drags the photo almost to
+         the very top of the hero, into the eyebrow's row. Mobile only needs
+         the top offset. */
+      transform: none;
     }
+    /* Higher flex-basis pushes the CTA's natural resting position lower in
+       the rail so it clears the text above without needing large margins. */
+    .hero-ctas-rail::before { flex-basis: 88%; }
   }
 
   /* Phone only: compact sizing, stacked roles + CTAs */
@@ -231,21 +302,61 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     .hero-dot { display: none; }
     .hero-role { flex-basis: 100%; }
     .hero-eyebrow { margin-bottom: var(--space-md); }
-    .hero-name { margin-bottom: var(--space-lg); }
+    .hero-name { margin-bottom: 5rem; }
     .hero-brand { font-size: var(--text-lg); margin-bottom: var(--space-md); }
     .hero-tagline {
       font-size: var(--text-xl);
       margin-bottom: var(--space-lg);
     }
     .hero-tagline::before { font-size: clamp(3.5rem, 2rem + 6vw, 5.5rem); }
-    .hero-intro {
-      font-size: var(--text-base);
-      margin-bottom: var(--space-md);
-    }
-    /* Supplementary teaser text — cut to keep the CTA reachable without excess scroll */
-    .hero-secondary { display: none; }
+    .hero-intro { font-size: var(--text-base); }
+    .hero-secondary { font-size: var(--text-sm); }
     .hero-ctas { flex-direction: column; align-items: stretch; }
     .hero-ctas .btn { width: 100%; }
     .hero-media { width: clamp(270px, 74vw, 340px); }
   }
 </style>
+
+<script>
+  // hero-intro/hero-secondary use [data-reveal-strict] instead of the site's
+  // generic [data-reveal] (see Base.astro): on common phone heights hero-intro
+  // sits right at the edge of the initial viewport, so the generic reveal's
+  // lenient threshold marks it visible on load — no scroll, no animation. This
+  // observer requires the paragraph to be well inside the viewport (not just
+  // poking into the last 10%) before revealing, so both paragraphs reliably
+  // animate in as the reader actually scrolls to them.
+  // Mobile: hero bottom padding = CTA card height + 8px (4px gap on each side
+  // of the card when it rests at the section boundary). Measured live so it
+  // stays accurate regardless of font size, padding, or viewport width.
+  const heroCtas = document.querySelector<HTMLElement>('.hero-ctas-rail .hero-ctas');
+  if (heroCtas) {
+    const mq = window.matchMedia('(max-width: 859px)');
+    const updateCtaGap = () => {
+      if (mq.matches) {
+        const h = heroCtas.getBoundingClientRect().height;
+        document.documentElement.style.setProperty('--hero-cta-gap', `${h}px`);
+      } else {
+        document.documentElement.style.removeProperty('--hero-cta-gap');
+      }
+    };
+    updateCtaGap();
+    new ResizeObserver(updateCtaGap).observe(heroCtas);
+    mq.addEventListener('change', updateCtaGap);
+  }
+
+  const strictEls = document.querySelectorAll<HTMLElement>('[data-reveal-strict]');
+  if (strictEls.length && document.documentElement.classList.contains('js-reveal')) {
+    const strictIo = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            strictIo.unobserve(entry.target);
+          }
+        }
+      },
+      { rootMargin: '0px 0px -35% 0px', threshold: 0.15 }
+    );
+    strictEls.forEach((el) => strictIo.observe(el));
+  }
+</script>
