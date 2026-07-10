@@ -341,6 +341,7 @@ import { ChevronLeft, ChevronRight, ArrowDown } from 'lucide-astro';
     lb.showModal();
   };
   const closeLightbox = () => lb?.close();
+  lb?.addEventListener('close', () => { syncActive(); updateOpacity(); });
 
   lbClose?.addEventListener('click', closeLightbox);
   lb?.addEventListener('click', (e) => { if (e.target === lb) closeLightbox(); });
