@@ -213,6 +213,7 @@ import { ChevronLeft, ChevronRight, ArrowDown } from 'lucide-astro';
       gap: 0.5rem;
     }
     .gal-item { aspect-ratio: unset; }
+    .gal-item:not(.is-active) { pointer-events: none; }
 
     /* Bouncing skip control */
     .gal-skip {
@@ -347,6 +348,7 @@ import { ChevronLeft, ChevronRight, ArrowDown } from 'lucide-astro';
       item.addEventListener('mouseenter', activate);
       item.addEventListener('click', () => {
         if (mqMobile.matches) {
+          if (!item.classList.contains('is-active')) return;
           const img = cats[current]?.querySelector<HTMLImageElement>('.gal-item.is-active img');
           if (img) openLightbox(img.src, img.alt);
         } else {
