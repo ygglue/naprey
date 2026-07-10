@@ -337,7 +337,7 @@ import { ChevronLeft, ChevronRight, ArrowDown } from 'lucide-astro';
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lb?.open) closeLightbox(); });
 
   // Desktop: hover expands + click opens lightbox for that item
-  // Mobile: hover is N/A; click opens lightbox for the currently active item
+  // Mobile: click opens lightbox for the currently active item (scroll-driven)
   document.querySelectorAll('.gal-strip').forEach(strip => {
     strip.querySelectorAll('.gal-item').forEach(item => {
       const activate = () => {
@@ -347,8 +347,7 @@ import { ChevronLeft, ChevronRight, ArrowDown } from 'lucide-astro';
       item.addEventListener('mouseenter', activate);
       item.addEventListener('click', () => {
         if (mqMobile.matches) {
-          const active = strip.querySelector<HTMLElement>('.gal-item.is-active');
-          const img = active?.querySelector<HTMLImageElement>('img');
+          const img = cats[current]?.querySelector<HTMLImageElement>('.gal-item.is-active img');
           if (img) openLightbox(img.src, img.alt);
         } else {
           activate();
@@ -364,6 +363,13 @@ import { ChevronLeft, ChevronRight, ArrowDown } from 'lucide-astro';
   const showCategory = (i: number) => {
     current = (i + cats.length) % cats.length;
     cats.forEach((c, idx) => c.classList.toggle('is-current', idx === current));
+    // Hide boundary nav buttons (visibility:hidden keeps layout stable)
+    cats.forEach((c, idx) => {
+      const prev = c.querySelector<HTMLButtonElement>('.gal-prev');
+      const next = c.querySelector<HTMLButtonElement>('.gal-next');
+      if (prev) prev.style.visibility = idx === 0 ? 'hidden' : '';
+      if (next) next.style.visibility = idx === cats.length - 1 ? 'hidden' : '';
+    });
   };
 
   // Mobile only: map scroll progress through the pinned runway to the active image
