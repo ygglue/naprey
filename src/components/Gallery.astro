@@ -89,7 +89,7 @@ import { ChevronLeft, ChevronRight, ArrowDown } from 'lucide-astro';
     position: relative;
     cursor: pointer;
     outline: none;
-    transition: flex 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: flex 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
   }
 
   /* Shrink non-active siblings */
@@ -374,6 +374,18 @@ import { ChevronLeft, ChevronRight, ArrowDown } from 'lucide-astro';
     });
   };
 
+  // Fade items by distance from active — further away = more transparent
+  const updateOpacity = () => {
+    if (!mqMobile.matches) return;
+    const items = Array.from(cats[current]?.querySelectorAll<HTMLElement>('.gal-item') ?? []);
+    const activeIdx = items.findIndex(el => el.classList.contains('is-active'));
+    if (activeIdx === -1) return;
+    items.forEach((el, i) => {
+      const dist = Math.abs(i - activeIdx);
+      el.style.opacity = dist === 0 ? '' : String(Math.max(0.2, 1 - dist * 0.2));
+    });
+  };
+
   // Mobile only: map scroll progress through the pinned runway to the active image
   const syncActive = () => {
     if (!pin || !mqMobile.matches || mqReduce.matches) return;
@@ -384,6 +396,7 @@ import { ChevronLeft, ChevronRight, ArrowDown } from 'lucide-astro';
     const progress = runway > 0 ? scrolled / runway : 0;
     const idx = Math.min(items.length - 1, Math.round(progress * (items.length - 1)));
     items.forEach((it, i) => it.classList.toggle('is-active', i === idx));
+    updateOpacity();
   };
 
   // Toggle a flag on <html> while the gallery is pinned so the sticky nav can
@@ -400,8 +413,8 @@ import { ChevronLeft, ChevronRight, ArrowDown } from 'lucide-astro';
 
   if (cats.length) {
     cats.forEach(cat => {
-      cat.querySelector('.gal-prev')?.addEventListener('click', () => { showCategory(current - 1); syncActive(); });
-      cat.querySelector('.gal-next')?.addEventListener('click', () => { showCategory(current + 1); syncActive(); });
+      cat.querySelector('.gal-prev')?.addEventListener('click', () => { showCategory(current - 1); syncActive(); updateOpacity(); });
+      cat.querySelector('.gal-next')?.addEventListener('click', () => { showCategory(current + 1); syncActive(); updateOpacity(); });
     });
     showCategory(0);
     window.addEventListener('scroll', onScroll, { passive: true });
