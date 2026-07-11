@@ -14,7 +14,6 @@ export const nav = {
     { label: "Work", href: "#work" },
     { label: "Advocacy", href: "#advocacy" },
     { label: "Gallery", href: "#gallery" },
-    { label: "Recognition", href: "#recognition" },
   ],
 };
 
@@ -33,15 +32,16 @@ export const hero = {
 };
 
 // Credibility strip shown directly under the hero — quick trust signals.
-// All drawn from verified achievements in `recognition` / `work` below.
+// All drawn from verified achievements in `work` below.
 export const proof = {
-  lead: "Recognized nationally & internationally",
+  lead: "Recognition & Affiliations",
   items: [
+    "Private Sector Representative — Regional Development Council XI",
     "Australia Awards Scholar, Curtin University",
-    "RDC XI Representative, PWD & Senior Citizen sector",
-    "Pinoy Big Brother Season 4 Housemate",
+    "Biennial Recognition Award (Nominee) — National Council on Disability Affairs",
+    "Happiest Pinoy (Entrepreneur Category) — Cebuana Lhuillier",
     "Air Asia Philippines Brand Ambassador",
-    "Top 1 Cebuana Lhuillier, Davao Region",
+    "Pinoy Big Brother (Season 4) Housemate",
   ],
 };
 
@@ -125,35 +125,33 @@ export const advocacy: AdvocacyItem[] = [
     title: "Accessibility",
     description:
       "Accessibility audits, consultation and assessment. Training on accessible tours. Accessibility content creation. Social media campaigns and brand collaboration.",
+    image: "advocacy/accessibility.webp",
   },
   {
     title: "Disability Inclusion",
     description:
       "Disability awareness seminars. Customer service training for serving guests with disabilities. Inclusive workplace training.",
+    image: "advocacy/disability-inclusion.webp",
   },
   {
     title: "Speaking Engagements",
     description:
       "Inspirational keynotes. Entrepreneurship and resilience. Livelihood and social entrepreneurship.",
+    image: "advocacy/speaking-engagements.webp",
   },
   {
     title: "Community Projects",
     description:
       "Community outreach programs. Fundraising events.",
+    image: "advocacy/community-projects.webp",
   },
   {
     title: "Partnerships",
     description:
       "Brands and organizations Naprey has partnered with to advance accessibility and inclusion.",
+    image: "advocacy/partnerships.webp",
   },
 ];
-
-// Client-requested running text — not a bulleted/CV-style list.
-export const recognition = {
-  heading: "Recognition",
-  body:
-    "Private Sector Representative — Regional Development Council XI, Australia Awards Scholar, Biennial Recognition Award (Nominee) — National Council on Disability Affairs, Happiest Pinoy (Entrepreneur Category) — Cebuana Lhuillier, Air Asia Philippines Brand Ambassador, Pinoy Big Brother (Season 4) Housemate.",
-};
 
 export type MilestoneItem = {
   title: string;
@@ -291,18 +289,35 @@ export const gallery = {
 
 export type PartnershipItem = {
   name: string;
-  description: string;
+  description?: string;
   logo?: string; /* path in /public, e.g. "partners/brand.webp" */
 };
 
 export const partnerships = {
   kicker: "Partnerships",
   heading: "Brands I've partnered with",
-  intro: "Brands and organizations Naprey has partnered with — logos to be added.",
+  intro: "Brands and organizations Naprey has partnered with to advance accessibility and inclusion.",
   items: [
-    { name: "Partner brand", description: "Placeholder — replace with a real partner name and logo." },
-    { name: "Partner brand", description: "Placeholder — replace with a real partner name and logo." },
-    { name: "Partner brand", description: "Placeholder — replace with a real partner name and logo." },
+    { name: "SM City Davao", logo: "partners/sm-city-davao.jpeg" },
+    { name: "Cebu Pacific Air", logo: "partners/cebu-pacific-air.jpg" },
+    { name: "San Miguel", logo: "partners/san-miguel.jpg" },
+    { name: "Fujifilm", logo: "partners/fujifilm.jpeg" },
+    { name: "MX3", logo: "partners/mx3.jpeg" },
+    { name: "NCCC Cares", logo: "partners/nccc-cares.jpg" },
+    { name: "Green Windows", logo: "partners/green-windows.jpg" },
+    { name: "APM", logo: "partners/apm.jpg" },
+    { name: "SWA", logo: "partners/swa.jpg" },
+    { name: "ATDC", logo: "partners/atdc.jpg" },
+    { name: "RDL", logo: "partners/rdl.jpg" },
+    { name: "Arlene Basquez Academy of Beauty", logo: "partners/arlene-basquez-academy-of-beauty.jpeg" },
+    { name: "My Skin Origins", logo: "partners/my-skin-origins.jpg" },
+    { name: "Project SELP Davao", logo: "partners/project-selp-davao.jpeg" },
+    { name: "Helen's Kitchen", logo: "partners/helens-kitchen.jpg" },
+    { name: "Holy Child College", logo: "partners/holy-child-college.jpg" },
+    { name: "Xtreme Makeover", logo: "partners/xtreme-makeover.jpg" },
+    { name: "Penong's Barbecue", logo: "partners/penongs-barbecue.jpg" },
+    { name: "Step Productions", logo: "partners/step-productions.jpg" },
+    { name: "Manang's Chicken", logo: "partners/manangs-chicken.jpg" },
   ] as PartnershipItem[],
 };
 
@@ -316,8 +331,11 @@ export const updates = {
   kicker: "News",
   heading: "Latest updates",
   items: [
-    { date: "Placeholder date", title: "Update title goes here", body: "Placeholder — replace with a real announcement." },
-    { date: "Placeholder date", title: "Update title goes here", body: "Placeholder — replace with a real announcement." },
+    {
+      date: "July 9, 2026",
+      title: "Entrepreneur, Accessible Tourism Advocate",
+      body: "Finalists for the 2026 Extraordinary Filipino – Entrepreneur with Disability category!",
+    },
   ] as UpdateItem[],
 };
 

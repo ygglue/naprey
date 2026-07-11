@@ -1,6 +1,21 @@
 ---
 import { partnerships } from '../data/content';
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+// Fisher–Yates — build-time only (like footer's new Date()), so each row gets a
+// fixed but distinct order in the output and no two rows ever line up vertically.
+const shuffle = <T,>(arr: T[]): T[] => {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+};
+const rows = [
+  { dur: 60, dir: 'normal',  delay: -8,  items: shuffle(partnerships.items) },
+  { dur: 75, dir: 'reverse', delay: -34, items: shuffle(partnerships.items) },
+  { dur: 52, dir: 'normal',  delay: -20, items: shuffle(partnerships.items) },
+];
 ---
 
 <section id="partnerships" class="section section--alt" aria-labelledby="partnerships-heading">
@@ -10,7 +25,28 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
       <h2 id="partnerships-heading">{partnerships.heading}</h2>
       <p class="ptr-intro">{partnerships.intro}</p>
     </header>
+  </div>
 
+  <!-- Desktop: 3-row infinite marquee (outside container so it bleeds full-width) -->
+  <div class="ptr-ticker" aria-hidden="true">
+    {rows.map(({ dur, dir, delay, items }) => (
+      <div class="ptr-row">
+        <div class="ptr-track" style={`animation-duration:${dur}s;animation-direction:${dir};animation-delay:${delay}s`}>
+          {[...items, ...items].map((item) => (
+            <div class="ptr-logo-tick">
+              {item.logo
+                ? <img src={`${base}${item.logo}`} alt="" />
+                : <span class="ptr-mark">{item.name}</span>
+              }
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- Mobile: simple grid (visually accessible alternative) -->
+  <div class="container">
     <ul class="ptr-list" role="list">
       {partnerships.items.map((item) => (
         <li class="ptr-item" data-reveal>
@@ -20,7 +56,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
               : <span class="ptr-mark" aria-hidden="true">{item.name.charAt(0)}</span>
             }
           </div>
-          <p class="ptr-desc">{item.description}</p>
+          {item.description && <p class="ptr-desc">{item.description}</p>}
         </li>
       ))}
     </ul>
@@ -36,10 +72,13 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
     line-height: 1.5;
   }
 
+  /* ── Mobile grid ── */
+  .ptr-ticker { display: none; }
+
   .ptr-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
-    gap: var(--space-lg);
+    grid-template-columns: repeat(auto-fill, minmax(min(130px, 45%), 1fr));
+    gap: var(--space-md);
     list-style: none;
     margin: 0;
     padding: 0;
@@ -48,26 +87,101 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
   .ptr-item { text-align: center; }
 
   .ptr-logo {
-    width: 72px;
-    height: 72px;
-    margin: 0 auto var(--space-sm);
-    background: var(--paper);
-    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    margin: 0 auto var(--space-xs);
+    height: 80px;
   }
-  .ptr-logo img { width: 100%; height: 100%; object-fit: cover; }
+  .ptr-logo img {
+    max-width: 100%;
+    max-height: 80px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+  }
   .ptr-mark {
     font-family: var(--font-display);
     font-size: var(--text-2xl);
     color: var(--accent);
   }
-
   .ptr-desc {
     font-size: var(--text-sm);
     color: var(--ink-soft);
     max-width: none;
   }
+
+  /* ── Desktop ticker ── */
+  @media (min-width: 600px) {
+    .ptr-list { display: none; }
+    .ptr-ticker {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      overflow: hidden;
+      margin-block: 0;
+      padding-block: var(--space-xs);
+    }
+
+    .ptr-row { overflow: hidden; }
+
+    .ptr-track {
+      display: flex;
+      align-items: center;
+      width: max-content;
+      /* The animated transform isolates the blend group, so multiply would blend
+         against white. Match the section backdrop so it blends against cream. */
+      background: var(--paper-2);
+      animation: ptr-scroll linear infinite;
+    }
+
+    @keyframes ptr-scroll {
+      from { transform: translate3d(0, 0, 0); }
+      to   { transform: translate3d(-50%, 0, 0); }
+    }
+
+    .ptr-logo-tick {
+      flex: none;
+      display: flex;
+      align-items: center;
+      height: 64px;
+      /* Spacing baked into each item (not flex gap) so translateX(-50%) lands on
+         an exact repeat boundary — seamless loop, no jitter at the wrap. */
+      margin-right: 3.5rem;
+    }
+    .ptr-logo-tick img {
+      max-height: 64px;
+      width: auto;
+      display: block;
+      mix-blend-mode: multiply;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .ptr-track { animation-play-state: paused; }
+    }
+
+    /* Paused via script when the section is off-screen or the tab is hidden */
+    .ptr-ticker.is-paused .ptr-track { animation-play-state: paused; }
+  }
 </style>
+
+<script>
+  const section = document.querySelector<HTMLElement>('#partnerships');
+  const ticker = section?.querySelector<HTMLElement>('.ptr-ticker');
+  if (section && ticker) {
+    let isIntersecting = true;
+    const applyState = () => {
+      ticker.classList.toggle('is-paused', document.hidden || !isIntersecting);
+    };
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        isIntersecting = entry.isIntersecting;
+        applyState();
+      },
+      { threshold: 0 }
+    );
+    io.observe(section);
+    document.addEventListener('visibilitychange', applyState);
+  }
+</script>
