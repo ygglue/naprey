@@ -35,7 +35,7 @@ const rows = [
           {[...items, ...items].map((item) => (
             <div class="ptr-logo-tick">
               {item.logo
-                ? <img src={`${base}${item.logo}`} alt="" />
+                ? <img src={/^https?:\/\//.test(item.logo!) ? item.logo : `${base}${item.logo}`} alt="" />
                 : <span class="ptr-mark">{item.name}</span>
               }
             </div>
@@ -52,7 +52,7 @@ const rows = [
         <li class="ptr-item" data-reveal>
           <div class="ptr-logo">
             {item.logo
-              ? <img src={`${base}${item.logo}`} alt={item.name} loading="lazy" />
+              ? <img src={/^https?:\/\//.test(item.logo!) ? item.logo : `${base}${item.logo}`} alt={item.name} loading="lazy" />
               : <span class="ptr-mark" aria-hidden="true">{item.name.charAt(0)}</span>
             }
           </div>

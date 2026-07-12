@@ -19,7 +19,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
         <li class="adv-item" data-reveal>
           <div class="adv-photo">
             {item.image
-              ? <img src={`${base}${item.image}`} alt="" loading="lazy" />
+              ? <img src={/^https?:\/\//.test(item.image!) ? item.image : `${base}${item.image}`} alt="" loading="lazy" />
               : <span class="adv-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
             }
           </div>
