@@ -359,7 +359,20 @@ import { ChevronLeft, ChevronRight, ArrowDown } from 'lucide-astro';
     lb.showModal();
   };
   const closeLightbox = () => lb?.close();
-  lb?.addEventListener('close', () => { syncActive(); updateOpacity(); });
+  lb?.addEventListener('close', () => {
+    // Closing a <dialog> restores focus to whatever had it before showModal()
+    // — the tapped <li>. On mobile this leaves a stuck focus-visible ring
+    // until another item steals focus; blur it so the item cleanly deactivates.
+    if (
+      mqMobile.matches &&
+      document.activeElement instanceof HTMLElement &&
+      document.activeElement.classList.contains('gal-item')
+    ) {
+      document.activeElement.blur();
+    }
+    syncActive();
+    updateOpacity();
+  });
 
   lbClose?.addEventListener('click', closeLightbox);
   lb?.addEventListener('click', (e) => { if (e.target === lb) closeLightbox(); });
