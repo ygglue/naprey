@@ -55,6 +55,15 @@ export function utf8ToBase64(str: string): string {
   return btoa(binary);
 }
 
+// Inverse of the above — decodes the base64 GitHub's Contents API returns
+// (which can contain embedded newlines) back to the original UTF-8 text.
+export function base64ToUtf8(b64: string): string {
+  const binary = atob(b64.replace(/\n/g, ''));
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return new TextDecoder().decode(bytes);
+}
+
 export const SESSION_COOKIE = 'admin_session';
 const SESSION_MAX_AGE_S = 60 * 60 * 24 * 7; // 7 days
 
